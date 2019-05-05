@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.thymeleaf.org http://www.thymeleaf.org
+  http://www.thymeleaf.org/thymeleaf-extras-springsecurity http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>
+        Welcome
+    </title>
+</head>
+
+<body>
+	<h2>Вы зашли как</h2>
+	<h1 th:inline="text">[[${#httpServletRequest.remoteUser}]]</h1><br />
+	<br />
+	<!-- 
+	<span th:text="${#request.userPrincipal.principal.authorities}"></span>
+	 -->
+	<div>Вы можете:</div><br />
+
+	<div sec:authorize="hasAuthority('update')">
+  		Обновлять данные о пользователях.
+	</div>
+	<div sec:authorize="hasAuthority('delete')">
+	  	Удалать пользователей.
+	</div>
+	<div sec:authorize="hasAuthority('create')">
+	  	Создавать новых пользователей.
+	</div><br />
+	<br />
+	
+	<!-- 
+	Logged user: <span sec:authentication="name"></span><br/>
+	Roles: <span sec:authentication="principal.authorities"></span>
+	-->
+	
+	<form th:action="@{/logout}" method="post">
+	    <input type="submit" value="Logout"/>
+	</form>
+	 
+</body>
+
+</html>
